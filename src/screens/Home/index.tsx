@@ -1,29 +1,42 @@
-import { Text, View, TextInput, TouchableOpacity, FlatList,Alert} from 'react-native'
+import { useState } from 'react';
+
+import { Text, View, TextInput, TouchableOpacity, FlatList, Alert } from 'react-native'
 import { styles } from './styles'
 
 import Participant from '../../components/Participant'
 
 export default function Home() {
-    const participants = ["Victor", "Toddy", "Yan", "Julia", "Ana", "Jaque", "Raquel", "Gui", "Carlos"];
+    const [participants, setParticipant] = useState([]);
+    const [participantName, setParticipantName] = useState("");
 
-   
-    function handleAddParticipant(){
-        if (participants.includes("Victor")) {
+
+    function handleAddParticipant() {
+        if (participantName.trim() === "") {
+            Alert.alert("Campo Vazio", "Preencha o campo com o nome do participante!");
+        }
+        if (participants.includes(participantName)) {
             return Alert.alert("Participante Existente", "Já existe um participante na lista com esse nome!")
         }
+
+        setParticipant([...participants, participantName]);
+        setParticipantName("");
     }
     function handleParticipantRemove(name: string) {
-       
-            return Alert.alert("Remover", `Deseja remover o Participante ${name}?`, [
-                {
-                    text:"Sim",
-                    onPress:()=>Alert.alert("Participante deletado!")
-                },
-                {
-                    text:"Não",
-                    style:'cancel'
+
+        return Alert.alert("Remover", `Deseja remover o Participante ${name}?`, [
+            {
+                text: "Sim",
+                onPress: () => {
+                    const updateParicipant = participants.filter(p => p !== name);
+                    setParticipant(updateParicipant);
+                    Alert.alert("Participante deletado!")
                 }
-            ])
+            },
+            {
+                text: "Não",
+                style: 'cancel'
+            }
+        ])
     }
 
 
@@ -37,6 +50,8 @@ export default function Home() {
                     style={styles.input}
                     placeholder='Nome do participante'
                     placeholderTextColor={"#6b6B6B"}
+                    value={participantName}
+                    onChangeText={(text) => setParticipantName(text)}
 
                 />
                 <TouchableOpacity style={styles.button} onPress={handleAddParticipant}>
@@ -59,7 +74,7 @@ export default function Home() {
                     />
                 )}
                 showsVerticalScrollIndicator={false}
-                ListEmptyComponent={()=>(
+                ListEmptyComponent={() => (
                     <Text style={styles.listEmptyText}>
                         Ninguém chegou ao evento ainda? Adcione participantes a sua lista de presença!
                     </Text>
