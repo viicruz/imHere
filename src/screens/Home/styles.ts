@@ -20,8 +20,8 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     gap: 12,
-    paddingTop:36,
-    paddingBottom:42
+    paddingTop: 36,
+    paddingBottom: 42,
   },
   input: {
     flex: 1,
