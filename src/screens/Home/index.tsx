@@ -21,22 +21,10 @@ export default function Home() {
         setParticipant([...participants, participantName]);
         setParticipantName("");
     }
-    function handleParticipantRemove(name: string) {
 
-        return Alert.alert("Remover", `Deseja remover o Participante ${name}?`, [
-            {
-                text: "Sim",
-                onPress: () => {
-                    const updateParicipant = participants.filter(p => p !== name);
-                    setParticipant(updateParicipant);
-                    Alert.alert("Participante deletado!")
-                }
-            },
-            {
-                text: "Não",
-                style: 'cancel'
-            }
-        ])
+    function handleParticipantRemove(name: string) {
+        const updateParicipant = participants.filter(p => p !== name);
+        setParticipant(updateParicipant);
     }
 
 
@@ -70,7 +58,7 @@ export default function Home() {
                     <Participant
                         key={item}
                         name={item}
-                        onRemove={() => handleParticipantRemove(item)}
+                        onRemove={handleParticipantRemove}
                     />
                 )}
                 showsVerticalScrollIndicator={false}
