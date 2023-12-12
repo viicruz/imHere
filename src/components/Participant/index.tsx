@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Animated, Alert, Dimensions } from 'react-native';
+import { View, Text, TouchableOpacity, Animated, Alert, Dimensions, Easing } from 'react-native';
 import { styles } from './styles';
 
 type Props = {
@@ -16,8 +16,9 @@ export default function Participant(props: Props) {
     useEffect(() => {
         const slideInAnimation = Animated.timing(slideAnimation, {
             toValue: 0,
-            duration: 500,
+            duration: 1000,
             useNativeDriver: true,
+            easing: Easing.out(Easing.exp)
         });
 
         const fadeAnimationsIn = fadeAnimations.map((animation) =>
@@ -40,14 +41,15 @@ export default function Participant(props: Props) {
                     Animated.parallel([
                         Animated.timing(slideAnimation, {
                             toValue: Dimensions.get('screen').width,
-                            duration: 500,
+                            duration: 1000,
                             useNativeDriver: true,
+                            easing: Easing.out(Easing.exp)
                         }),
 
 
                         Animated.timing(fade, {
                             toValue: -100,
-                            duration: 300,
+                            duration: 1000,
                             useNativeDriver: true,
                         }
                         ),
